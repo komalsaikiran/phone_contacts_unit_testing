@@ -1,5 +1,5 @@
 import unittest
-from flask import Flask, jsonify
+
 from App.app import app
 
 
@@ -33,7 +33,8 @@ class FlaskAPITestCase(unittest.TestCase):
         self.assertNotEqual(response.status_code, 200)
         contacts = response.get_json()
         self.assertIsInstance(contacts, list)
-        self.assertNotEqual(contacts[0], {'id': 2, 'name': 'Sai', 'ph_no': 9876543211})  # here we get an error while running the class but not while ruinning this def function because we have updated sai name with komal sai kiran in update method
+        self.assertNotEqual(contacts[0], {'id': 2, 'name': 'Sai',
+                                          'ph_no': 9876543211})  # here we get an error while running the class but not while ruinning this def function because we have updated sai name with komal sai kiran in update method
         self.assertNotEqual(contacts[0]['name'], 'Sai')
 
     def test_add_contact(self):
@@ -47,7 +48,6 @@ class FlaskAPITestCase(unittest.TestCase):
         self.assertEqual(created_contact['ph_no'], 9876543213)
         self.assertEqual(created_contact['id'], 4)
 
-
     def test_update_contact(self):
         contact_id = 1
         updated_contact = {'name': 'Komal Sai Kiran'}
@@ -55,9 +55,10 @@ class FlaskAPITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         updated_contact_response = response.get_json()
         print(updated_contact_response)
-        self.assertIsInstance( updated_contact_response, dict)
-        self.assertEqual( updated_contact_response['name'], updated_contact['name'])
-        #self.assertEqual( updated_contact_response['ph_no'], updated_contact['ph_no']) #it will be failed because we have updating only ph no but not updating phone number
+        self.assertIsInstance(updated_contact_response, dict)
+        self.assertEqual(updated_contact_response['name'], updated_contact['name'])
+        # self.assertEqual( updated_contact_response['ph_no'], updated_contact['ph_no']) #it will be failed because
+        # we have updating only ph no but not updating phone number
 
     def test_delete_contact(self):
         contact_id = 1
@@ -67,4 +68,3 @@ class FlaskAPITestCase(unittest.TestCase):
         print(response_data)
         self.assertIsInstance(response_data, dict)
         self.assertEqual(response_data['msg'], '1 contact  has been deleted')
-
